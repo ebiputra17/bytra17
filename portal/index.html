@@ -1,381 +1,621 @@
 <!doctype html>
-<html lang="en">
+<html lang="id">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Bytra – Power BI Portal</title>
-<meta name="description" content="Bytra: a Power BI analytics portal with Ebi Putra's dashboards in one place.">
+<meta name="description" content="Bytra: portal Power BI karya Ebi Putra. Versi demo statis dengan login demo dan data dummy.">
 <link rel="canonical" href="https://ebiputra17.github.io/bytra17/portal/">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Bytra – Power BI Portal by Ebi Putra">
-<meta property="og:description" content="Browse Power BI dashboards: logistics, automotive, telecom and personal analysis projects.">
+<meta property="og:description" content="Demo portal Power BI: login, pilih Group Report, lalu buka dashboard.">
 <meta property="og:url" content="https://ebiputra17.github.io/bytra17/portal/">
 <meta property="og:image" content="https://ebiputra17.github.io/bytra17/assets/work/kag-whs-explorer.webp">
+<meta name="robots" content="index,follow">
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <style>
 :root{
-  --navy:#1e4d7c; --navy-d:#163a5e; --gold:#f2b705;
-  --bg:#F2F4F6; --surface:#fff; --ink:#0E1A2B; --muted:#52606F; --line:#D5DBE1; --teal:#0B6E78;
-  --display:"Bricolage Grotesque","Segoe UI",Arial,sans-serif;
-  --body:"IBM Plex Sans","Segoe UI",Arial,sans-serif;
+  --blue:#1e4d7c; --blue-d:#163a5e; --blue-soft:#e4f0fb; --gold:#f2b705;
+  --line:#d5dce2; --text:#1c2a36; --muted:#6b7a89; --bg:#ecf0f5;
+  --font:"Segoe UI","Helvetica Neue",Arial,sans-serif;
 }
-*{box-sizing:border-box;margin:0}
-body{background:var(--bg);color:var(--ink);font:400 16px/1.55 var(--body);-webkit-font-smoothing:antialiased}
-a{color:inherit}
-button{font:inherit;color:inherit}
-:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
-h1,h2,h3{font-family:var(--display);line-height:1.15;letter-spacing:-.015em}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%}
+body{font:14px/1.5 var(--font);color:var(--text);background:var(--bg);-webkit-font-smoothing:antialiased}
+a{color:var(--blue)}
+button,input,select{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+[hidden]{display:none!important}
 
-/* top bar */
-.top{position:sticky;top:0;z-index:10;background:var(--navy);color:#fff;height:60px;display:flex;align-items:center;gap:12px;padding:0 16px}
-.brand{display:flex;align-items:center;gap:10px;text-decoration:none}
-.brand svg{width:34px;height:34px;flex:none}
-.brand b{font:800 1.25rem var(--display);letter-spacing:-.01em}
-.brand small{display:block;font-size:.66rem;letter-spacing:.14em;color:#b9cbe0;font-weight:600;margin-top:-2px}
-.top .sp{flex:1}
-.top a.back{color:#fff;text-decoration:none;font-weight:600;font-size:.92rem;padding:7px 12px;border:1.5px solid rgba(255,255,255,.45);border-radius:6px;white-space:nowrap}
-.top a.back:hover{background:#fff;color:var(--navy)}
-.menu{display:none;background:none;border:1.5px solid rgba(255,255,255,.45);border-radius:6px;padding:6px 10px;cursor:pointer;color:#fff}
+/* ================= LOGIN (sama dengan GuestLayout aplikasi) ================= */
+.gl-page{position:relative;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px 16px;
+  background-color:#0d2a4a;
+  background-image:radial-gradient(circle at 15% 20%,rgba(242,183,5,.18) 0,transparent 35%),radial-gradient(circle at 85% 80%,rgba(56,132,214,.35) 0,transparent 45%),linear-gradient(rgba(255,255,255,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.04) 1px,transparent 1px),linear-gradient(135deg,#0b2440 0%,#1e4d7c 100%);
+  background-size:auto,auto,40px 40px,40px 40px,auto}
+.gl-page::before{content:"";position:absolute;inset:0;background:linear-gradient(135deg,rgba(8,22,46,.6),rgba(8,22,46,.35))}
+.gl-card{position:relative;display:flex;width:100%;max-width:820px;min-height:460px;border-radius:16px;overflow:hidden;box-shadow:0 8px 32px rgba(0,0,0,.35);border:1px solid rgba(255,255,255,.13)}
+.gl-left{flex:0 0 42%;background:rgba(15,45,90,.7);backdrop-filter:blur(20px) saturate(180%);-webkit-backdrop-filter:blur(20px) saturate(180%);padding:32px 28px;display:flex;flex-direction:column;justify-content:center;gap:22px;border-right:1px solid rgba(255,255,255,.08);color:#fff}
+.gl-logo{width:240px;max-width:100%;height:auto;display:block}
+.gl-eyebrow{font-size:11px;color:rgba(255,255,255,.45);text-transform:uppercase;letter-spacing:1.8px;font-weight:500;margin:0 0 6px}
+.gl-title{font-size:30px;font-weight:700;line-height:1.15;margin:0 0 12px}
+.gl-divider{width:36px;height:2px;background:rgba(255,255,255,.3);border-radius:2px;margin:0 0 14px}
+.gl-desc{font-size:13px;color:rgba(255,255,255,.6);line-height:1.7;margin:0 0 18px}
+.gl-features{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:10px}
+.gl-features li{display:flex;align-items:center;gap:9px;font-size:12.5px;color:rgba(255,255,255,.7)}
+.gl-features .fa{color:rgba(255,255,255,.4)}
+.gl-right{flex:1;background:#fff;padding:30px 30px 20px;display:flex;flex-direction:column}
+.gl-right-inner{flex:1;display:flex;flex-direction:column;justify-content:center}
+.gl-form-title{font-size:18px;font-weight:600;color:#1a2a3a;margin:0 0 4px}
+.gl-form-subtitle{font-size:11.5px;color:#94a3b8;margin:0 0 20px}
+.gl-demo{display:flex;gap:8px;align-items:flex-start;background:#eff6ff;border:1px solid #bfdbfe;color:var(--blue);border-radius:6px;padding:9px 12px;font-size:12px;margin-bottom:14px}
+.gl-demo code{background:#fff;border:1px solid #bfdbfe;border-radius:4px;padding:0 5px;font-size:12px}
+.gl-demo button{background:none;border:0;padding:0;color:var(--blue);font-weight:600;text-decoration:underline;cursor:pointer;font-size:12px}
+.gl-field{margin-bottom:12px}
+.gl-field>label{display:block;font-size:10px;font-weight:600;color:#4a5568;margin-bottom:4px;letter-spacing:.5px;text-transform:uppercase}
+.gl-input-wrap{position:relative}
+.gl-input-wrap>.fa{position:absolute;left:11px;top:50%;transform:translateY(-50%);font-size:13px;color:#b0bec5;pointer-events:none}
+.gl-input-wrap input{height:38px;width:100%;padding:0 36px 0 34px;font-size:13px;border:1px solid #e2e8f0;border-radius:6px;background:#f8fafc;color:#2d3748}
+.gl-input-wrap input:focus{border-color:var(--blue);background:#fff;box-shadow:0 0 0 3px rgba(30,77,124,.1);outline:none}
+.gl-has-error input{border-color:#e53e3e;background:#fff5f5}
+.gl-pw-toggle{position:absolute;right:3px;top:3px;bottom:3px;background:none;border:0;padding:0 8px;cursor:pointer;color:#b0bec5}
+.gl-pw-toggle:hover{color:#718096}
+.gl-error{font-size:11.5px;color:#e53e3e;margin:-4px 0 10px}
+.gl-row-opts{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;font-size:11.5px;color:#718096}
+.gl-row-opts label{display:flex;align-items:center;gap:6px;cursor:pointer}
+.gl-btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;height:38px;background:var(--blue);color:#fff;border:0;border-radius:6px;font-size:13px;font-weight:500;cursor:pointer}
+.gl-btn:hover{background:#1a4268}
+.gl-btn:disabled{opacity:.65;cursor:wait}
+.gl-back{display:inline-flex;align-items:center;gap:5px;margin-top:14px;font-size:11.5px;font-weight:600;text-decoration:none}
+.gl-back:hover{text-decoration:underline}
+.gl-footer{padding-top:12px;border-top:1px solid #f1f5f9;text-align:center;margin-top:14px;font-size:10px;color:#a0aec0}
+@media(max-width:580px){
+  .gl-card{flex-direction:column}
+  .gl-left{flex:none;padding:22px 20px;gap:14px}
+  .gl-desc,.gl-features{display:none}
+  .gl-right{padding:22px 20px 16px}
+}
 
-/* layout */
-.app{display:grid;grid-template-columns:270px 1fr;min-height:calc(100vh - 60px)}
-aside{background:var(--surface);border-right:1px solid var(--line);padding:18px 14px;position:sticky;top:60px;height:calc(100vh - 60px);overflow:auto}
-.search{width:100%;padding:9px 12px;border:1px solid var(--line);border-radius:6px;font:inherit;background:var(--bg)}
-.search:focus{outline:2px solid var(--navy);outline-offset:0;background:#fff}
-.group{margin-top:18px}
-.group h4{font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:600;margin:0 8px 6px}
-.nav-item{display:flex;align-items:center;gap:8px;width:100%;text-align:left;background:none;border:0;border-radius:6px;padding:8px 10px;cursor:pointer;font-size:.93rem;text-decoration:none}
-.nav-item:hover{background:var(--bg)}
-.nav-item[aria-current="page"]{background:var(--navy);color:#fff}
-.nav-item .dot{width:7px;height:7px;border-radius:50%;background:var(--line);flex:none}
-.nav-item .dot.live{background:var(--gold)}
-.nav-item[aria-current="page"] .dot{background:var(--gold)}
-.empty-list{color:var(--muted);font-size:.9rem;padding:12px 8px}
-main{padding:28px clamp(16px,3vw,40px) 56px;min-width:0}
+/* ================= APP (AdminLTE 2, skin Bytra) ================= */
+.main-header{position:fixed;top:0;left:0;right:0;height:50px;display:flex;z-index:30;background:var(--blue);color:#fff}
+.logo{width:240px;flex:none;display:flex;align-items:center;justify-content:center;gap:8px;color:#fff;text-decoration:none;font-size:20px;background:var(--blue-d);transition:width .2s}
+.logo svg{width:26px;height:26px;flex:none}
+.logo .lg b{font-weight:700}
+.navbar{flex:1;display:flex;align-items:center;min-width:0}
+.sidebar-toggle{background:none;border:0;color:#fff;height:50px;padding:0 16px;cursor:pointer;font-size:16px}
+.sidebar-toggle:hover{background:rgba(0,0,0,.1)}
+.nav-demo{font-size:11px;font-weight:600;background:var(--gold);color:#3a2c00;border-radius:3px;padding:2px 7px;white-space:nowrap}
+.navbar .sp{flex:1}
+.nav-link{color:#fff;text-decoration:none;height:50px;display:flex;align-items:center;gap:7px;padding:0 14px;white-space:nowrap;background:none;border:0;cursor:pointer}
+.nav-link:hover{background:rgba(0,0,0,.1)}
+.user-menu{position:relative}
+.dropdown{position:absolute;right:0;top:50px;width:260px;background:#fff;color:var(--text);box-shadow:0 6px 18px rgba(0,0,0,.18);border-radius:0 0 4px 4px;overflow:hidden}
+.user-header{background:var(--blue);color:#fff;text-align:center;padding:18px 12px}
+.user-header .fa{font-size:56px;opacity:.9}
+.user-header p{margin:8px 0 0;font-size:15px}
+.user-header small{display:block;font-size:12px;opacity:.75}
+.user-footer{display:flex;justify-content:space-between;padding:10px;background:#f9f9f9}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;height:30px;padding:0 10px;border:1px solid #ddd;background:#f4f4f4;color:#444;border-radius:3px;cursor:pointer;text-decoration:none;font-size:12px}
+.btn:hover{background:#e7e7e7}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.btn-primary{background:var(--blue);border-color:var(--blue-d);color:#fff}
+.btn-primary:hover{background:var(--blue-d)}
 
-/* home */
-.intro{background:var(--navy);color:#fff;border-radius:10px;padding:28px clamp(20px,3vw,36px);position:relative;overflow:hidden}
-.intro::after{content:"";position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.06) 1px,transparent 1px);background-size:28px 28px;pointer-events:none}
-.intro h1{font-size:clamp(1.7rem,3.6vw,2.4rem);font-weight:800;max-width:22ch;position:relative}
-.intro p{color:#cfdbe8;max-width:62ch;margin-top:10px;position:relative}
-.stats{display:flex;gap:28px;flex-wrap:wrap;margin-top:20px;position:relative}
-.stats strong{display:block;font:800 1.6rem var(--display);color:var(--gold)}
-.stats span{font-size:.85rem;color:#cfdbe8}
-.bar{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin:32px 0 16px;flex-wrap:wrap}
-.bar h2{font-size:1.4rem;font-weight:800}
-.bar span{color:var(--muted);font-size:.92rem}
-.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:20px}
-.card{background:var(--surface);border:1px solid var(--line);border-radius:8px;overflow:hidden;display:flex;flex-direction:column;text-decoration:none;transition:border-color .15s,transform .15s}
-.card:hover{border-color:var(--navy);transform:translateY(-2px)}
-.card img{width:100%;aspect-ratio:16/9;object-fit:cover;object-position:top;border-bottom:1px solid var(--line);background:var(--bg)}
-.card div{padding:14px 16px 18px;display:flex;flex-direction:column;gap:4px}
-.card h3{font-size:1.08rem;font-weight:800}
-.card p{color:var(--muted);font-size:.9rem}
-.chip{display:inline-flex;align-items:center;gap:6px;font-size:.75rem;font-weight:600;color:var(--teal);letter-spacing:.02em}
-.chip.live::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--gold)}
+.main-sidebar{position:fixed;top:50px;bottom:0;left:0;width:240px;background:var(--blue);color:#fff;overflow-y:auto;z-index:20;transition:transform .2s,width .2s}
+.user-panel{display:flex;gap:10px;align-items:center;padding:12px 14px}
+.user-panel svg{width:42px;height:42px;flex:none}
+.user-panel p{margin:0;font-weight:600}
+.user-panel small{color:rgba(255,255,255,.7);display:flex;align-items:center;gap:5px}
+.user-panel small::before{content:"";width:8px;height:8px;border-radius:50%;background:#3fbf5f}
+.menu-header{padding:10px 15px 6px;font-size:11px;letter-spacing:.06em;color:rgba(255,255,255,.55);background:rgba(0,0,0,.12)}
+.sidebar-menu{list-style:none;margin:0;padding:0}
+.sidebar-menu a{display:flex;align-items:center;gap:10px;padding:11px 15px;color:rgba(255,255,255,.85);text-decoration:none;border-left:3px solid transparent}
+.sidebar-menu a .fa{width:18px;text-align:center}
+.sidebar-menu a:hover{color:#fff;background:linear-gradient(90deg,rgba(74,159,216,.35),rgba(74,159,216,.25))}
+.sidebar-menu a[aria-current="page"]{color:#fff;background:linear-gradient(90deg,rgba(94,179,232,.3),rgba(94,179,232,.2));border-left-color:#5eb3e8}
+.sidebar-menu .lock{margin-left:auto;font-size:11px;opacity:.6}
 
-/* report view */
-.crumb{font-size:.88rem;color:var(--muted);margin-bottom:10px}
-.crumb a{color:var(--navy);font-weight:600;text-decoration:none}
-.crumb a:hover{text-decoration:underline}
-.head{display:flex;justify-content:space-between;gap:16px;align-items:flex-start;flex-wrap:wrap}
-.head h1{font-size:clamp(1.6rem,3.2vw,2.2rem);font-weight:800}
-.head p{color:var(--muted);max-width:70ch;margin-top:6px}
-.badge{font-size:.78rem;font-weight:600;padding:5px 10px;border-radius:99px;background:#e6edf5;color:var(--navy);white-space:nowrap}
-.badge.live{background:#fff4d1;color:#7a5b00}
-.viewer{margin-top:20px;background:var(--surface);border:1.5px solid var(--ink);border-radius:8px;overflow:hidden}
-.viewer .stage{aspect-ratio:16/9;background:#0b1624;display:block;width:100%}
-.viewer iframe{border:0;width:100%;height:100%;display:block}
-.viewer video{width:100%;height:100%;display:block;background:#000}
-.viewer .shot{padding:0;border:0;width:100%;height:100%;cursor:zoom-in;background:var(--surface)}
-.viewer .shot img{width:100%;height:100%;object-fit:contain;display:block}
-.strip{display:flex;gap:8px;padding:10px;border-top:1px solid var(--line);overflow-x:auto;background:var(--bg)}
-.strip button{flex:none;padding:0;border:2px solid transparent;border-radius:6px;background:var(--surface);cursor:pointer;overflow:hidden;display:flex;align-items:center;justify-content:center}
-.strip button[aria-pressed="true"]{border-color:var(--navy)}
-.strip img{display:block;height:58px;width:auto;max-width:130px;object-fit:cover}
-.strip .play{height:58px;width:96px;font-size:.78rem;font-weight:600;color:#fff;background:var(--navy)}
-.meta{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin-top:20px}
-.meta div{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:14px 16px}
-.meta dt{font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:600}
-.meta dd{margin:4px 0 0}
-.points{margin-top:20px;background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:16px 20px}
-.points h3{font-size:1rem;font-weight:800;margin-bottom:6px}
-.points ul{padding-left:18px;color:var(--muted)}
-.points li+li{margin-top:4px}
-.pager{display:flex;justify-content:space-between;gap:12px;margin-top:28px;flex-wrap:wrap}
-.pager a{font-weight:600;text-decoration:none;color:var(--navy);padding:9px 14px;border:1.5px solid var(--navy);border-radius:6px}
-.pager a:hover{background:var(--navy);color:#fff}
-.note{margin-top:32px;font-size:.85rem;color:var(--muted)}
+.content-wrapper{margin-left:240px;padding-top:50px;min-height:100vh;display:flex;flex-direction:column;transition:margin .2s}
+.content{flex:1;padding:6px 12px;min-height:0}
+.main-footer{background:#fff;border-top:1px solid #d2d6de;padding:12px 15px;font-size:13px;display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.label{display:inline-block;font-size:11px;font-weight:700;padding:2px 6px;border-radius:3px;color:#fff;background:var(--blue)}
+.label-warning{background:#f39c12}
+
+@media(min-width:768px){
+  body.sidebar-collapse .main-sidebar{width:50px}
+  body.sidebar-collapse .logo{width:50px}
+  body.sidebar-collapse .logo .lg,
+  body.sidebar-collapse .user-panel div,
+  body.sidebar-collapse .menu-header,
+  body.sidebar-collapse .sidebar-menu span,
+  body.sidebar-collapse .sidebar-menu .lock{display:none}
+  body.sidebar-collapse .user-panel{padding:10px 4px;justify-content:center}
+  body.sidebar-collapse .user-panel svg{width:34px;height:34px}
+  body.sidebar-collapse .content-wrapper{margin-left:50px}
+}
+
+/* ================= DASHBOARD (sama dengan Dashboard.vue) ================= */
+.pbi-page{display:flex;flex-direction:column;height:calc(100vh - 50px - 47px);min-height:460px;margin:-6px -12px}
+.pbi-selectors{display:flex;align-items:flex-end;gap:22px;flex-wrap:wrap;padding:10px 16px 12px;background:#fff;border-bottom:1px solid var(--line);flex-shrink:0}
+.pbi-field label{display:block;margin:0 0 5px;font-size:13px;font-weight:600}
+.pbi-field select{min-width:190px;height:34px;border-radius:6px;border:1px solid #c3ccd4;padding:0 8px;background:#fff;cursor:pointer}
+.pbi-dash{flex:1;min-width:260px}
+.pbi-pillwrap{display:flex;align-items:center;gap:4px}
+.pbi-pills{display:flex;gap:8px;overflow-x:auto;min-width:0;scrollbar-width:none;padding:2px}
+.pbi-pills::-webkit-scrollbar{display:none}
+.pbi-pills button{white-space:nowrap;padding:6px 16px;font-size:13px;background:#fff;border:1px solid #9db4c9;border-radius:999px;cursor:pointer}
+.pbi-pills button:hover{background:#f3f7fb}
+.pbi-pills button.active{background:var(--blue-soft);border-color:var(--blue);color:var(--blue-d);font-weight:600}
+.pbi-actions{display:flex;gap:6px;margin-left:auto}
+.pbi-main{flex:1;min-height:0;min-width:0;position:relative;background:var(--bg);display:flex;flex-direction:column}
+.pbi-report{flex:1;min-height:0;position:relative;background:#0b1624}
+.pbi-report iframe{border:0;width:100%;height:100%;display:block;background:#fff}
+.pbi-report video{width:100%;height:100%;display:block;background:#000}
+.pbi-report .shot{border:0;padding:0;width:100%;height:100%;background:#fff;cursor:zoom-in;display:block}
+.pbi-report .shot img{width:100%;height:100%;object-fit:contain;display:block}
+.pbi-strip{display:flex;gap:8px;padding:8px 12px;border-top:1px solid var(--line);background:#fff;overflow-x:auto;flex-shrink:0;align-items:center}
+.pbi-strip .lbl{font-size:12px;color:var(--muted);white-space:nowrap;margin-right:4px}
+.pbi-strip button{flex:none;padding:0;border:2px solid transparent;border-radius:5px;background:#fff;cursor:pointer;overflow:hidden;display:flex}
+.pbi-strip button[aria-pressed="true"]{border-color:var(--blue)}
+.pbi-strip img{height:44px;width:auto;max-width:100px;object-fit:cover;display:block}
+.pbi-strip .play{height:44px;width:84px;display:flex;align-items:center;justify-content:center;gap:5px;font-size:12px;font-weight:600;color:#fff;background:var(--blue)}
+.pbi-info{position:absolute;top:0;right:0;bottom:0;width:min(340px,90%);background:#fff;border-left:1px solid var(--line);box-shadow:-6px 0 18px rgba(0,0,0,.12);padding:16px 18px;overflow:auto;z-index:2}
+.pbi-info h3{margin:0 0 6px;font-size:17px}
+.pbi-info p{margin:0 0 12px;color:#4a5866}
+.pbi-info dl{margin:0 0 12px}
+.pbi-info dt{font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-top:10px}
+.pbi-info dd{margin:2px 0 0}
+.pbi-info ul{padding-left:18px;margin:4px 0 0;color:#4a5866}
+.pbi-info .close{position:absolute;top:10px;right:10px}
+.pbi-status{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;text-align:center;background:var(--bg);color:var(--muted);z-index:3}
+.pbi-status .fa{color:var(--blue)}
+.pbi-status p{margin:10px 0 0}
+
+/* ================= HALAMAN LAIN ================= */
+.content-header{display:flex;align-items:baseline;gap:10px;padding:12px 4px 10px;flex-wrap:wrap}
+.content-header h1{font-size:22px;font-weight:400;margin:0}
+.content-header small{color:var(--muted)}
+.box{background:#fff;border-top:3px solid var(--blue);border-radius:3px;box-shadow:0 1px 1px rgba(0,0,0,.1);margin-bottom:16px}
+.box-header{display:flex;align-items:center;gap:10px;padding:10px 14px;border-bottom:1px solid #f4f4f4;flex-wrap:wrap}
+.box-header h3{font-size:16px;font-weight:400;margin:0}
+.box-header .sp{flex:1}
+.box-body{padding:14px}
+.callout{border-left:5px solid #00c0ef;background:#e8f7fc;border-radius:3px;padding:10px 14px;margin-bottom:14px;color:#1f4f5d}
+.callout h4{margin:0 0 4px;font-size:14px}
+.callout p{margin:0}
+.table-wrap{overflow-x:auto}
+table{border-collapse:collapse;width:100%;min-width:640px}
+th,td{text-align:left;padding:8px 10px;border-bottom:1px solid #f0f0f0;vertical-align:middle}
+th{font-size:12px;color:#555;background:#fafafa;border-bottom:2px solid #eee}
+tr:hover td{background:#fafcfe}
+.badge{display:inline-block;font-size:11px;font-weight:600;padding:2px 8px;border-radius:10px;white-space:nowrap}
+.b-ok{background:#dff3e4;color:#1d6b33}
+.b-img{background:#eef1f4;color:#4a5866}
+.b-live{background:#fff4d1;color:#7a5b00}
+.search{height:30px;border:1px solid #d2d6de;border-radius:3px;padding:0 8px;min-width:200px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}
+.grid h4{margin:0 0 6px;font-size:14px;display:flex;align-items:center;gap:8px;color:var(--blue)}
+.grid p{margin:0;color:#4a5866}
+.muted{color:var(--muted)}
 
 dialog{border:0;background:transparent;padding:0;max-width:none;max-height:none}
 dialog::backdrop{background:rgba(14,26,43,.88)}
 dialog img{display:block;max-width:94vw;max-height:92vh;border-radius:6px;background:#fff;cursor:zoom-out}
 
-@media(max-width:860px){
-  .menu{display:inline-block}
-  .app{grid-template-columns:1fr}
-  aside{position:fixed;top:60px;left:0;bottom:0;width:min(300px,86vw);height:auto;z-index:9;transform:translateX(-100%);transition:transform .2s;box-shadow:0 10px 30px rgba(0,0,0,.2)}
-  body.open aside{transform:none}
-  .top a.back span{display:none}
+@media(max-width:767px){
+  .logo{width:auto;padding:0 12px}
+  .logo .lg{display:none}
+  .main-sidebar{transform:translateX(-100%);width:240px}
+  body.sidebar-open .main-sidebar{transform:none;box-shadow:4px 0 18px rgba(0,0,0,.25)}
+  .content-wrapper{margin-left:0}
+  .nav-link .txt{display:none}
+  .pbi-selectors{gap:10px}
+  .pbi-field,.pbi-field select{width:100%;min-width:0}
+  .pbi-actions{margin-left:0}
+  .pbi-page{height:auto;min-height:0}
+  .pbi-main{min-height:60vh}
 }
 @media(prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
 </head>
 <body>
 
-<header class="top">
-  <button class="menu" type="button" aria-controls="sidebar" aria-expanded="false" aria-label="Show report list">☰</button>
-  <a class="brand" href="#">
-    <svg viewBox="0 0 48 48" aria-hidden="true"><rect width="48" height="48" rx="11" fill="#fff" fill-opacity=".12"/><g fill="#fff"><rect x="9" y="26" width="7" height="13" rx="2"/><rect x="20.5" y="18" width="7" height="21" rx="2"/><rect x="32" y="12" width="7" height="27" rx="2"/></g><circle cx="35.5" cy="7" r="3" fill="#f2b705"/></svg>
-    <span><b>Bytra</b><small>POWER BI ANALYTICS</small></span>
-  </a>
-  <div class="sp"></div>
-  <a class="back" href="../">← <span>Back to </span>portfolio</a>
-</header>
+<!-- ============ LOGIN ============ -->
+<div id="login" class="gl-page" hidden>
+  <div class="gl-card">
+    <div class="gl-left">
+      <svg class="gl-logo" viewBox="0 0 320 88" role="img" aria-label="Bytra">
+        <g fill="#fff"><rect x="6" y="46" width="12" height="30" rx="3"/><rect x="24" y="32" width="12" height="44" rx="3"/><rect x="42" y="18" width="12" height="58" rx="3"/></g>
+        <circle cx="48" cy="8" r="5" fill="#f2b705"/>
+        <text x="72" y="60" fill="#fff" font-family="'Segoe UI',Arial,sans-serif" font-size="52" font-weight="700" letter-spacing="1">Bytra</text>
+        <text x="74" y="80" fill="#fff" fill-opacity=".75" font-family="'Segoe UI',Arial,sans-serif" font-size="13" letter-spacing="3">POWER BI ANALYTICS</text>
+      </svg>
+      <div>
+        <p class="gl-eyebrow">Welcome to</p>
+        <h1 class="gl-title">Bytra</h1>
+        <div class="gl-divider"></div>
+        <p class="gl-desc">Power BI Dashboard — Lihat seluruh laporan Power BI dalam satu portal, tanpa login Microsoft.</p>
+        <ul class="gl-features">
+          <li><i class="fa fa-check-circle"></i>Dashboard Power BI terpusat per group</li>
+          <li><i class="fa fa-check-circle"></i>Tanpa akun Microsoft untuk user</li>
+          <li><i class="fa fa-check-circle"></i>Akses report berbasis role yang aman</li>
+        </ul>
+      </div>
+    </div>
+    <div class="gl-right">
+      <div class="gl-right-inner">
+        <h2 class="gl-form-title">Login</h2>
+        <p class="gl-form-subtitle">Login untuk melihat dashboard.</p>
+        <div class="gl-demo"><i class="fa fa-info-circle" style="margin-top:2px"></i>
+          <div>Versi demo portofolio. Username <code>demo</code>, password <code>demo</code>.
+            <button type="button" id="fillDemo">Isi otomatis</button></div>
+        </div>
+        <form id="loginForm" novalidate>
+          <div class="gl-field">
+            <label for="lg-user">Username / Email</label>
+            <div class="gl-input-wrap"><i class="fa fa-user"></i>
+              <input id="lg-user" autocomplete="username" placeholder="Masukkan username atau email" required></div>
+          </div>
+          <div class="gl-field">
+            <label for="lg-pass">Password</label>
+            <div class="gl-input-wrap"><i class="fa fa-lock"></i>
+              <input id="lg-pass" type="password" autocomplete="current-password" placeholder="Masukkan password" required>
+              <button type="button" class="gl-pw-toggle" aria-label="Tampilkan password"><i class="fa fa-eye"></i></button></div>
+          </div>
+          <p class="gl-error" id="lgError" role="alert" hidden></p>
+          <div class="gl-row-opts">
+            <label><input type="checkbox" id="lg-remember"> Ingat saya</label>
+          </div>
+          <button class="gl-btn" type="submit" id="lgBtn">Login</button>
+        </form>
+        <a class="gl-back" href="../"><i class="fa fa-arrow-left"></i> Kembali ke portofolio</a>
+      </div>
+      <div class="gl-footer">© <span class="yr"></span> Bytra · Ebi Putra</div>
+    </div>
+  </div>
+</div>
 
-<div class="app">
-  <aside id="sidebar" aria-label="Reports">
-    <input class="search" type="search" placeholder="Search reports…" aria-label="Search reports">
-    <div id="nav"></div>
+<!-- ============ APP ============ -->
+<div id="app" hidden>
+  <header class="main-header">
+    <a class="logo" href="#dashboard">
+      <svg viewBox="0 0 48 48" aria-hidden="true"><g fill="#fff"><rect x="9" y="26" width="7" height="13" rx="2"/><rect x="20.5" y="18" width="7" height="21" rx="2"/><rect x="32" y="12" width="7" height="27" rx="2"/></g><circle cx="35.5" cy="7" r="3" fill="#f2b705"/></svg>
+      <span class="lg"><b>Bytra</b></span>
+    </a>
+    <nav class="navbar">
+      <button class="sidebar-toggle" type="button" aria-label="Buka/tutup menu"><i class="fa fa-bars"></i></button>
+      <span class="nav-demo">DEMO</span>
+      <span class="sp"></span>
+      <a class="nav-link" href="../"><i class="fa fa-briefcase"></i><span class="txt">Portofolio</span></a>
+      <div class="user-menu">
+        <button class="nav-link" type="button" id="userBtn" aria-expanded="false"><i class="fa fa-user"></i><span class="txt uname">Demo</span></button>
+        <div class="dropdown" id="userDrop" hidden>
+          <div class="user-header"><i class="fa fa-user-circle"></i><p class="ufull">Demo Viewer<small>demo@bytra.local · viewer</small></p></div>
+          <div class="user-footer">
+            <a class="btn" href="#about">Tentang demo</a>
+            <button class="btn" type="button" id="logoutBtn"><i class="fa fa-sign-out"></i> Logout</button>
+          </div>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <aside class="main-sidebar" id="sidebar">
+    <div class="user-panel">
+      <svg viewBox="0 0 48 48" aria-hidden="true"><rect width="48" height="48" rx="11" fill="#fff" fill-opacity=".12"/><g fill="#fff"><rect x="9" y="26" width="7" height="13" rx="2"/><rect x="20.5" y="18" width="7" height="21" rx="2"/><rect x="32" y="12" width="7" height="27" rx="2"/></g><circle cx="35.5" cy="7" r="3" fill="#f2b705"/></svg>
+      <div><p>Demo Viewer</p><small>viewer</small></div>
+    </div>
+    <div class="menu-header">MENU UTAMA</div>
+    <ul class="sidebar-menu">
+      <li><a href="#dashboard" data-page="dashboard"><i class="fa fa-dashboard"></i><span>Dashboard</span></a></li>
+      <li><a href="#master" data-page="master"><i class="fa fa-file-text-o"></i><span>Master Report</span><i class="fa fa-eye lock" title="Hanya lihat"></i></a></li>
+      <li><a href="#access" data-page="access"><i class="fa fa-users"></i><span>User &amp; Role</span><i class="fa fa-eye lock" title="Hanya lihat"></i></a></li>
+      <li><a href="#about" data-page="about"><i class="fa fa-info-circle"></i><span>Tentang Bytra</span></a></li>
+    </ul>
   </aside>
-  <main id="main" tabindex="-1"></main>
+
+  <div class="content-wrapper">
+    <section class="content" id="content"></section>
+    <footer class="main-footer">
+      <strong>Bytra © <span class="yr"></span> Ebi Putra</strong>
+      <span><span class="label">v1.0</span> <span class="label label-warning">Demo</span></span>
+    </footer>
+  </div>
 </div>
 
 <dialog id="lb"><img alt=""></dialog>
 
 <script>
 /*
-  Report list. To add a report: copy one object and fill it in.
-  - embedUrl: the "Publish to web" link from Power BI (File > Embed report > Publish to web).
-    If it is filled in, the live interactive report is shown. If it is empty, screenshots/video are shown.
-    Only publish reports that use dummy or public data: Publish to web makes the report public.
-  - video / images: paths relative to this page.
+  Daftar report (versi demo statis dari aplikasi Bytra).
+  - group / subgroup: dipakai bar "Group Report" dan "Dashboard Group", sama seperti di aplikasi asli.
+  - embedUrl: link Power BI "Publish to web" (https://app.powerbi.com/view?r=...).
+    Kalau diisi, report interaktif yang tampil. Kalau kosong, rekaman & screenshot yang tampil.
+    Publish to web membuat report publik: hanya untuk report dengan data dummy/publik.
+  - video / images: path relatif dari halaman ini.
 */
 var REPORTS = [
-  {
-    id: "warehouse-3d",
-    title: "Warehouse Utilization 3D Explorer",
-    category: "Logistics",
-    summary: "An interactive 3D view of warehouse capacity: pick a warehouse, see location status and utilization, then drill into box-level detail.",
-    points: ["3D rack and bin map coloured by utilization", "Drill-through from warehouse to location to box", "Used daily by warehouse supervisors"],
-    sources: "Online spreadsheets, SQL Server, SAP, text files, GP",
-    etl: "SSIS, M Query, Python, Dataflow, Microsoft Fabric",
-    visual: "Power BI, embedded in a web portal",
-    embedUrl: "",
-    video: "../assets/work/kag-whs.mp4",
-    images: ["../assets/work/kag-whs-explorer.webp", "../assets/work/kag-whs-detail.webp"]
-  },
-  {
-    id: "kpi-scorecard",
-    title: "KPI Balanced Scorecard",
-    category: "Logistics",
-    summary: "Monthly KPI achievement per warehouse for Operations and Administration, with written summaries that explain each indicator.",
-    points: ["Scorecard per warehouse and department", "Narrative pages that explain every KPI", "Monthly trend versus target"],
-    sources: "Online spreadsheets, SQL Server, SAP, text files, GP",
-    etl: "SSIS, M Query, Python, Dataflow, Microsoft Fabric",
-    visual: "Power BI, embedded in a web portal",
-    embedUrl: "",
-    video: "",
-    images: ["../assets/work/kag-kpi-home.webp", "../assets/work/kag-kpi-summary.webp", "../assets/work/kag-kpi-narrative-1.webp", "../assets/work/kag-kpi-narrative-2.webp"]
-  },
-  {
-    id: "wip-dashboard",
-    title: "Work in Progress (WIP) Dashboard",
-    category: "Automotive",
-    summary: "Tracks work in progress by status, potential revenue, aging and claim status, with summary and detail pages, a mobile layout and hourly refresh.",
-    points: ["Aging buckets and claim status", "Potential revenue per branch", "Separate mobile layout, hourly refresh"],
-    sources: "Online spreadsheets, SQL Server, SAP",
-    etl: "SSIS, M Query, Python",
-    visual: "Power BI, embedded in a web page",
-    embedUrl: "",
-    video: "../assets/work/astra-wip.mp4",
-    images: ["../assets/work/astra-wip-summary.webp", "../assets/work/astra-wip-detail.webp", "../assets/work/astra-wip-mobile-summary.webp", "../assets/work/astra-wip-mobile-detail.webp"]
-  },
-  {
-    id: "incentive-performance",
-    title: "Incentive Performance Dashboard",
-    category: "Automotive",
-    summary: "Measures performance for mechanics and foremen: total incentive, revenue, lead time and per-person reports, with a mobile layout.",
-    points: ["Incentive and revenue per mechanic", "Lead time analysis", "Per-person report pages"],
-    sources: "Online spreadsheets, SQL Server, SAP",
-    etl: "SSIS, M Query, Python",
-    visual: "Power BI, embedded in a web page",
-    embedUrl: "",
-    video: "../assets/work/astra-incentive.mp4",
-    images: ["../assets/work/astra-incentive-main.webp", "../assets/work/astra-incentive-detail.webp", "../assets/work/astra-incentive-mobile.webp"]
-  },
-  {
-    id: "network-operations",
-    title: "Network Operations Dashboards",
-    category: "Telecom",
-    summary: "Construction progress, trouble tickets with MTTR by city and region, and progress per area, built for business teams.",
-    points: ["Construction progress tracking", "Trouble tickets and MTTR by city and region", "Progress detail per area"],
-    sources: "Online spreadsheets, SQL Server",
-    etl: "SSIS, M Query",
-    visual: "Power BI, embedded in a web page",
-    embedUrl: "",
-    video: "../assets/work/ln-dashboards.mp4",
-    images: ["../assets/work/ln-construction.webp", "../assets/work/ln-trouble-ticket.webp", "../assets/work/ln-detail-area.webp"]
-  },
-  {
-    id: "bike-sales",
-    title: "Bike Sales Analysis",
-    category: "Personal projects",
-    summary: "Sales performance dashboard built to find what drives revenue.",
-    points: ["Revenue by product, region and customer segment"],
-    sources: "Public dataset",
-    etl: "Power Query",
-    visual: "Power BI",
-    embedUrl: "",
-    video: "",
-    images: ["../assets/images/bike.png"]
-  },
-  {
-    id: "covid-19",
-    title: "COVID-19 Cases",
-    category: "Personal projects",
-    summary: "Case trends explored and visualized in an interactive report.",
-    points: ["Case trends over time and by region"],
-    sources: "Public dataset",
-    etl: "Power Query",
-    visual: "Power BI",
-    embedUrl: "",
-    video: "",
-    images: ["../assets/images/covid.png"]
-  }
+  { id:"warehouse-3d", group:"Logistics", subgroup:"Warehouse", title:"Warehouse Utilization 3D Explorer",
+    summary:"Tampilan 3D kapasitas gudang: pilih gudang, lihat status lokasi dan utilisasi, lalu drill sampai detail per box.",
+    points:["Peta rak dan bin 3D diwarnai sesuai utilisasi","Drill-through gudang → lokasi → box","Dipakai harian oleh supervisor gudang"],
+    sources:"Online spreadsheets, SQL Server, SAP, text files, GP", etl:"SSIS, M Query, Python, Dataflow, Microsoft Fabric",
+    embedUrl:"", video:"../assets/work/kag-whs.mp4", images:["../assets/work/kag-whs-explorer.webp","../assets/work/kag-whs-detail.webp"] },
+  { id:"kpi-scorecard", group:"Logistics", subgroup:"KPI", title:"KPI Balanced Scorecard",
+    summary:"Pencapaian KPI bulanan per gudang untuk Operations dan Administration, dengan narasi yang menjelaskan tiap indikator.",
+    points:["Scorecard per gudang dan departemen","Halaman narasi untuk setiap KPI","Tren bulanan dibanding target"],
+    sources:"Online spreadsheets, SQL Server, SAP, text files, GP", etl:"SSIS, M Query, Python, Dataflow, Microsoft Fabric",
+    embedUrl:"", video:"", images:["../assets/work/kag-kpi-home.webp","../assets/work/kag-kpi-summary.webp","../assets/work/kag-kpi-narrative-1.webp","../assets/work/kag-kpi-narrative-2.webp"] },
+  { id:"wip-dashboard", group:"Automotive", subgroup:"Service", title:"Work in Progress (WIP)",
+    summary:"Memantau pekerjaan berjalan per status, potensi revenue, aging dan status klaim. Ada halaman ringkasan, detail, layout mobile, refresh tiap jam.",
+    points:["Bucket aging dan status klaim","Potensi revenue per cabang","Layout mobile, refresh tiap jam"],
+    sources:"Online spreadsheets, SQL Server, SAP", etl:"SSIS, M Query, Python",
+    embedUrl:"", video:"../assets/work/astra-wip.mp4", images:["../assets/work/astra-wip-summary.webp","../assets/work/astra-wip-detail.webp","../assets/work/astra-wip-mobile-summary.webp","../assets/work/astra-wip-mobile-detail.webp"] },
+  { id:"incentive-performance", group:"Automotive", subgroup:"Service", title:"Incentive Performance",
+    summary:"Mengukur kinerja mekanik dan foreman: total insentif, revenue, lead time, dan laporan per orang, dengan layout mobile.",
+    points:["Insentif dan revenue per mekanik","Analisis lead time","Halaman laporan per orang"],
+    sources:"Online spreadsheets, SQL Server, SAP", etl:"SSIS, M Query, Python",
+    embedUrl:"", video:"../assets/work/astra-incentive.mp4", images:["../assets/work/astra-incentive-main.webp","../assets/work/astra-incentive-detail.webp","../assets/work/astra-incentive-mobile.webp"] },
+  { id:"network-operations", group:"Telecom", subgroup:"Network Operations", title:"Construction & Trouble Ticket",
+    summary:"Progres konstruksi, trouble ticket dengan MTTR per kota dan region, serta progres per area untuk tim bisnis.",
+    points:["Tracking progres konstruksi","Trouble ticket dan MTTR per kota/region","Detail progres per area"],
+    sources:"Online spreadsheets, SQL Server", etl:"SSIS, M Query",
+    embedUrl:"", video:"../assets/work/ln-dashboards.mp4", images:["../assets/work/ln-construction.webp","../assets/work/ln-trouble-ticket.webp","../assets/work/ln-detail-area.webp"] },
+  { id:"bike-sales", group:"Personal Projects", subgroup:"Public Data", title:"Bike Sales Analysis",
+    summary:"Dashboard performa penjualan untuk mencari pendorong revenue.",
+    points:["Revenue per produk, region dan segmen pelanggan"], sources:"Dataset publik", etl:"Power Query",
+    embedUrl:"", video:"", images:["../assets/images/bike.png"] },
+  { id:"covid-19", group:"Personal Projects", subgroup:"Public Data", title:"COVID-19 Cases",
+    summary:"Tren kasus yang dieksplorasi dan divisualkan dalam report interaktif.",
+    points:["Tren kasus per waktu dan wilayah"], sources:"Dataset publik", etl:"Power Query",
+    embedUrl:"", video:"", images:["../assets/images/covid.png"] }
 ];
 
+/* Akun demo. Ini hanya tampilan: halaman statis tidak bisa mengamankan apa pun, jadi semua data di sini dummy. */
+var DEMO_USER = { username:"demo", password:"demo", name:"Demo Viewer", email:"demo@bytra.local", role:"viewer" };
+var KEY = "bytra-demo-session";
+
 (function () {
-  var main = document.getElementById('main'),
-      nav = document.getElementById('nav'),
-      search = document.querySelector('.search'),
-      menu = document.querySelector('.menu'),
-      lb = document.getElementById('lb'), lbImg = lb.querySelector('img');
-
-  function esc(s) { return String(s).replace(/[&<>"']/g, function (c) { return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
-  function thumb(r) { return r.images[0] || ''; }
-  function isLive(r) { return /^https:\/\/app\.powerbi\.com\//.test(r.embedUrl || ''); }
-  function categories(list) {
-    var out = [];
-    list.forEach(function (r) { if (out.indexOf(r.category) < 0) out.push(r.category); });
-    return out;
+  var $ = function (s, el) { return (el || document).querySelector(s); };
+  var $$ = function (s, el) { return Array.prototype.slice.call((el || document).querySelectorAll(s)); };
+  function esc(s) { return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) { return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]; }); }
+  function isLive(r) { return /^https:\/\/app\.powerbi\.com\//.test(r.embedUrl || ""); }
+  function store(kind) { try { return window[kind]; } catch (e) { return null; } }
+  function getSession() {
+    try { return (store("sessionStorage") && sessionStorage.getItem(KEY)) || (store("localStorage") && localStorage.getItem(KEY)); } catch (e) { return null; }
   }
-
-  function renderNav(current) {
-    var q = search.value.trim().toLowerCase();
-    var list = REPORTS.filter(function (r) {
-      return !q || (r.title + ' ' + r.category + ' ' + r.summary).toLowerCase().indexOf(q) >= 0;
-    });
-    var html = '<div class="group"><a class="nav-item" href="#"' + (current ? '' : ' aria-current="page"') + '>All reports</a></div>';
-    categories(list).forEach(function (c) {
-      html += '<div class="group"><h4>' + esc(c) + '</h4>';
-      list.filter(function (r) { return r.category === c; }).forEach(function (r) {
-        html += '<a class="nav-item" href="#' + esc(r.id) + '"' + (current === r.id ? ' aria-current="page"' : '') + '>' +
-                '<span class="dot' + (isLive(r) ? ' live' : '') + '"></span>' + esc(r.title) + '</a>';
-      });
-      html += '</div>';
-    });
-    if (!list.length) html += '<p class="empty-list">No reports match “' + esc(search.value) + '”.</p>';
-    nav.innerHTML = html;
+  var memSession = null;
+  function setSession(remember) {
+    memSession = "1";
+    try { (remember ? localStorage : sessionStorage).setItem(KEY, "1"); } catch (e) {}
   }
-
-  function renderHome() {
-    var live = REPORTS.filter(isLive).length;
-    var html =
-      '<section class="intro">' +
-        '<h1>Power BI dashboards, in one portal.</h1>' +
-        '<p>Bytra is the analytics portal I built to publish Power BI reports from a single place. This public edition shows my dashboards with anonymized dummy data. Pick a report to open it.</p>' +
-        '<div class="stats">' +
-          '<div><strong>' + REPORTS.length + '</strong><span>reports</span></div>' +
-          '<div><strong>' + categories(REPORTS).length + '</strong><span>industries &amp; topics</span></div>' +
-          (live ? '<div><strong>' + live + '</strong><span>live interactive</span></div>' : '') +
-        '</div>' +
-      '</section>' +
-      '<div class="bar"><h2>All reports</h2>' + (live ? '<span>Yellow dot = live interactive report</span>' : '') + '</div>' +
-      '<div class="cards">' +
-      REPORTS.map(function (r) {
-        return '<a class="card" href="#' + esc(r.id) + '">' +
-          '<img src="' + esc(thumb(r)) + '" alt="" loading="lazy">' +
-          '<div><span class="chip' + (isLive(r) ? ' live' : '') + '">' + esc(r.category) + '</span>' +
-          '<h3>' + esc(r.title) + '</h3><p>' + esc(r.summary) + '</p></div></a>';
-      }).join('') +
-      '</div>' +
-      '<p class="note">Screenshots and recordings use anonymized dummy data. Built by Ebi Putra.</p>';
-    main.innerHTML = html;
-    document.title = 'Bytra – Power BI Portal';
+  function clearSession() {
+    memSession = null;
+    try { sessionStorage.removeItem(KEY); localStorage.removeItem(KEY); } catch (e) {}
   }
+  function loggedIn() { return !!(memSession || getSession()); }
 
-  function stageFor(r, item) {
-    if (item.type === 'embed') return '<iframe title="' + esc(r.title) + '" src="' + esc(r.embedUrl) + '" allowfullscreen loading="lazy"></iframe>';
-    if (item.type === 'video') return '<video controls playsinline preload="metadata" poster="' + esc(thumb(r)) + '"><source src="' + esc(r.video) + '" type="video/mp4"></video>';
-    return '<button type="button" class="shot" data-full="' + esc(item.src) + '" aria-label="Enlarge screenshot"><img src="' + esc(item.src) + '" alt="' + esc(r.title) + ' screenshot"></button>';
-  }
+  $$(".yr").forEach(function (el) { el.textContent = new Date().getFullYear(); });
 
-  function renderReport(r) {
-    var items = [];
-    if (isLive(r)) items.push({ type: 'embed' });
-    if (r.video) items.push({ type: 'video' });
-    r.images.forEach(function (src) { items.push({ type: 'image', src: src }); });
-
-    var idx = REPORTS.indexOf(r),
-        prev = REPORTS[(idx - 1 + REPORTS.length) % REPORTS.length],
-        next = REPORTS[(idx + 1) % REPORTS.length];
-
-    var strip = items.length > 1 ? '<div class="strip">' + items.map(function (it, i) {
-      var inner = it.type === 'image' ? '<img src="' + esc(it.src) + '" alt="" loading="lazy">'
-                : '<span class="play">' + (it.type === 'embed' ? 'Live report' : '▶ Recording') + '</span>';
-      return '<button type="button" data-i="' + i + '" aria-pressed="' + (i === 0) + '" aria-label="Show item ' + (i + 1) + '">' + inner + '</button>';
-    }).join('') + '</div>' : '';
-
-    main.innerHTML =
-      '<p class="crumb"><a href="#">All reports</a> / ' + esc(r.category) + '</p>' +
-      '<div class="head"><div><h1>' + esc(r.title) + '</h1><p>' + esc(r.summary) + '</p></div>' +
-      '<span class="badge' + (isLive(r) ? ' live' : '') + '">' + (isLive(r) ? 'Live interactive' : 'Screenshots & recording') + '</span></div>' +
-      '<div class="viewer"><div class="stage">' + stageFor(r, items[0]) + '</div>' + strip + '</div>' +
-      '<dl class="meta"><div><dt>Sources</dt><dd>' + esc(r.sources) + '</dd></div>' +
-      '<div><dt>ETL</dt><dd>' + esc(r.etl) + '</dd></div>' +
-      '<div><dt>Visual</dt><dd>' + esc(r.visual) + '</dd></div></dl>' +
-      (r.points && r.points.length ? '<div class="points"><h3>Highlights</h3><ul>' + r.points.map(function (p) { return '<li>' + esc(p) + '</li>'; }).join('') + '</ul></div>' : '') +
-      '<nav class="pager" aria-label="More reports"><a href="#' + esc(prev.id) + '">← ' + esc(prev.title) + '</a><a href="#' + esc(next.id) + '">' + esc(next.title) + ' →</a></nav>' +
-      '<p class="note">Data shown is anonymized dummy data.</p>';
-
-    var stage = main.querySelector('.stage');
-    main.querySelectorAll('.strip button').forEach(function (b) {
-      b.addEventListener('click', function () {
-        stage.innerHTML = stageFor(r, items[+b.dataset.i]);
-        main.querySelectorAll('.strip button').forEach(function (x) { x.setAttribute('aria-pressed', x === b); });
-      });
-    });
-    document.title = r.title + ' – Bytra';
-  }
-
-  function route() {
-    var id = decodeURIComponent(location.hash.slice(1));
-    var r = REPORTS.filter(function (x) { return x.id === id; })[0];
-    renderNav(r ? r.id : '');
-    if (r) renderReport(r); else renderHome();
-    document.body.classList.remove('open');
-    menu.setAttribute('aria-expanded', 'false');
-    window.scrollTo(0, 0);
-  }
-
-  search.addEventListener('input', function () {
-    var id = decodeURIComponent(location.hash.slice(1));
-    renderNav(REPORTS.some(function (x) { return x.id === id; }) ? id : '');
+  /* ---------- Login ---------- */
+  var form = $("#loginForm"), user = $("#lg-user"), pass = $("#lg-pass"), err = $("#lgError"), btn = $("#lgBtn");
+  $("#fillDemo").addEventListener("click", function () { user.value = DEMO_USER.username; pass.value = DEMO_USER.password; btn.focus(); });
+  $(".gl-pw-toggle").addEventListener("click", function () {
+    var show = pass.type === "password";
+    pass.type = show ? "text" : "password";
+    this.innerHTML = '<i class="fa fa-eye' + (show ? "-slash" : "") + '"></i>';
+    this.setAttribute("aria-label", show ? "Sembunyikan password" : "Tampilkan password");
   });
-  menu.addEventListener('click', function () {
-    var open = document.body.classList.toggle('open');
-    menu.setAttribute('aria-expanded', String(open));
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+    var u = user.value.trim().toLowerCase();
+    var ok = (u === DEMO_USER.username || u === DEMO_USER.email) && pass.value === DEMO_USER.password;
+    $$(".gl-field", form).forEach(function (f) { f.classList.toggle("gl-has-error", !ok); });
+    if (!ok) { err.textContent = "Username atau password salah. Gunakan akun demo: demo / demo."; err.hidden = false; pass.value = ""; pass.focus(); return; }
+    err.hidden = true;
+    btn.disabled = true; btn.innerHTML = '<i class="fa fa-spinner fa-spin"></i> Sedang masuk...';
+    setTimeout(function () {
+      setSession($("#lg-remember").checked);
+      btn.disabled = false; btn.textContent = "Login"; pass.value = "";
+      if (!location.hash) location.hash = "#dashboard";
+      route();
+    }, 450);
   });
-  document.addEventListener('click', function (e) {
-    var b = e.target.closest('[data-full]');
-    if (b) { lbImg.src = b.dataset.full; lbImg.alt = b.getAttribute('aria-label') || ''; lb.showModal(); return; }
+
+  /* ---------- Layout ---------- */
+  var userBtn = $("#userBtn"), userDrop = $("#userDrop");
+  userBtn.addEventListener("click", function (e) {
+    e.stopPropagation();
+    userDrop.hidden = !userDrop.hidden;
+    userBtn.setAttribute("aria-expanded", String(!userDrop.hidden));
+  });
+  document.addEventListener("click", function (e) {
+    if (!userDrop.hidden && !e.target.closest(".user-menu")) { userDrop.hidden = true; userBtn.setAttribute("aria-expanded", "false"); }
+    if (document.body.classList.contains("sidebar-open") && !e.target.closest("#sidebar") && !e.target.closest(".sidebar-toggle")) document.body.classList.remove("sidebar-open");
+    var b = e.target.closest("[data-full]");
+    if (b) { lbImg.src = b.dataset.full; lb.showModal(); return; }
     if (e.target === lb || e.target === lbImg) lb.close();
   });
-  window.addEventListener('hashchange', route);
+  $("#logoutBtn").addEventListener("click", function () { clearSession(); userDrop.hidden = true; location.hash = ""; route(); });
+  $(".sidebar-toggle").addEventListener("click", function () {
+    if (window.matchMedia("(max-width:767px)").matches) document.body.classList.toggle("sidebar-open");
+    else document.body.classList.toggle("sidebar-collapse");
+  });
+  var lb = $("#lb"), lbImg = $("img", lb);
+  var content = $("#content");
+
+  /* ---------- Dashboard ---------- */
+  function tree() {
+    var t = {};
+    REPORTS.forEach(function (r) { (t[r.group] = t[r.group] || {}); (t[r.group][r.subgroup] = t[r.group][r.subgroup] || []).push(r); });
+    return t;
+  }
+  function byId(id) { return REPORTS.filter(function (r) { return r.id === id; })[0]; }
+
+  function renderDashboard(menuId) {
+    var t = tree(), cur = byId(menuId) || REPORTS[0];
+    var groups = Object.keys(t), subs = Object.keys(t[cur.group]), dash = t[cur.group][cur.subgroup];
+    content.innerHTML =
+      '<div class="pbi-page">' +
+        '<section class="pbi-selectors" aria-label="Pilih laporan">' +
+          '<div class="pbi-field"><label for="gSel">Group Report</label><select id="gSel">' +
+            groups.map(function (g) { return '<option' + (g === cur.group ? " selected" : "") + ">" + esc(g) + "</option>"; }).join("") + "</select></div>" +
+          '<div class="pbi-field"><label for="sSel">Dashboard Group</label><select id="sSel">' +
+            subs.map(function (s) { return '<option' + (s === cur.subgroup ? " selected" : "") + ">" + esc(s) + "</option>"; }).join("") + "</select></div>" +
+          '<div class="pbi-field pbi-dash"><label>Dashboard</label><div class="pbi-pillwrap"><div class="pbi-pills">' +
+            dash.map(function (r) { return '<button type="button" data-id="' + esc(r.id) + '"' + (r.id === cur.id ? ' class="active" aria-pressed="true"' : ' aria-pressed="false"') + ">" + esc(r.title) + "</button>"; }).join("") +
+          "</div></div></div>" +
+          '<div class="pbi-actions">' +
+            '<button type="button" class="btn" id="aInfo" title="Info report"><i class="fa fa-info-circle"></i></button>' +
+            '<button type="button" class="btn" id="aReload" title="Muat ulang laporan"><i class="fa fa-refresh"></i></button>' +
+            '<button type="button" class="btn" id="aFull" title="Layar penuh"><i class="fa fa-arrows-alt"></i></button>' +
+          "</div>" +
+        "</section>" +
+        '<main class="pbi-main" aria-label="' + esc(cur.title) + '"><div class="pbi-report" id="stage"></div><div id="strip"></div>' +
+          '<div class="pbi-status" id="status" role="status"><div><i class="fa fa-spinner fa-spin fa-2x"></i><p>Memuat laporan...</p></div></div>' +
+        "</main>" +
+      "</div>";
+
+    $("#gSel").addEventListener("change", function () { var s = Object.keys(t[this.value])[0]; go(t[this.value][s][0].id); });
+    $("#sSel").addEventListener("change", function () { go(t[cur.group][this.value][0].id); });
+    $$(".pbi-pills button").forEach(function (b) { b.addEventListener("click", function () { go(b.dataset.id); }); });
+    $("#aReload").addEventListener("click", function () { loadReport(cur); });
+    $("#aFull").addEventListener("click", function () {
+      var el = $(".pbi-main");
+      if (document.fullscreenElement) document.exitFullscreen(); else if (el.requestFullscreen) el.requestFullscreen();
+    });
+    $("#aInfo").addEventListener("click", function () { toggleInfo(cur); });
+    loadReport(cur);
+    document.title = cur.title + " – Bytra";
+  }
+  function go(id) { location.hash = "#dashboard?menu=" + encodeURIComponent(id); }
+
+  function items(r) {
+    var out = [];
+    if (isLive(r)) out.push({ type:"embed" });
+    if (r.video) out.push({ type:"video" });
+    r.images.forEach(function (src) { out.push({ type:"image", src:src }); });
+    return out;
+  }
+  function stageHtml(r, it) {
+    if (it.type === "embed") return '<iframe title="' + esc(r.title) + '" src="' + esc(r.embedUrl) + '" allowfullscreen></iframe>';
+    if (it.type === "video") return '<video controls playsinline preload="metadata" poster="' + esc(r.images[0] || "") + '"><source src="' + esc(r.video) + '" type="video/mp4"></video>';
+    return '<button type="button" class="shot" data-full="' + esc(it.src) + '" aria-label="Perbesar screenshot"><img src="' + esc(it.src) + '" alt="' + esc(r.title) + '"></button>';
+  }
+  var loadTimer;
+  function loadReport(r) {
+    var stage = $("#stage"), strip = $("#strip"), status = $("#status"), list = items(r);
+    status.hidden = false;
+    clearTimeout(loadTimer);
+    loadTimer = setTimeout(function () {
+      stage.innerHTML = stageHtml(r, list[0]);
+      strip.innerHTML = list.length > 1 ? '<div class="pbi-strip"><span class="lbl">' + (isLive(r) ? "Tampilan" : "Rekaman &amp; screenshot") + "</span>" + list.map(function (it, i) {
+        var inner = it.type === "image" ? '<img src="' + esc(it.src) + '" alt="" loading="lazy">'
+          : '<span class="play"><i class="fa ' + (it.type === "embed" ? "fa-bar-chart" : "fa-play") + '"></i>' + (it.type === "embed" ? "Live" : "Video") + "</span>";
+        return '<button type="button" data-i="' + i + '" aria-pressed="' + (i === 0) + '" aria-label="Tampilan ' + (i + 1) + '">' + inner + "</button>";
+      }).join("") + "</div>" : "";
+      $$(".pbi-strip button", strip).forEach(function (b) {
+        b.addEventListener("click", function () {
+          stage.innerHTML = stageHtml(r, list[+b.dataset.i]);
+          $$(".pbi-strip button", strip).forEach(function (x) { x.setAttribute("aria-pressed", String(x === b)); });
+        });
+      });
+      status.hidden = true;
+    }, 350);
+  }
+  function toggleInfo(r) {
+    var old = $(".pbi-info");
+    if (old) { old.remove(); return; }
+    var div = document.createElement("aside");
+    div.className = "pbi-info";
+    div.innerHTML = '<button type="button" class="btn close" aria-label="Tutup"><i class="fa fa-times"></i></button>' +
+      "<h3>" + esc(r.title) + "</h3><p>" + esc(r.summary) + "</p>" +
+      "<dl><dt>Group</dt><dd>" + esc(r.group) + " › " + esc(r.subgroup) + "</dd><dt>Sumber data</dt><dd>" + esc(r.sources) + "</dd><dt>ETL</dt><dd>" + esc(r.etl) + "</dd>" +
+      "<dt>Jenis embed</dt><dd>" + (isLive(r) ? "Publish to web (interaktif)" : "Rekaman &amp; screenshot") + "</dd></dl>" +
+      (r.points.length ? "<dt class='muted' style='font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase'>Highlight</dt><ul>" + r.points.map(function (p) { return "<li>" + esc(p) + "</li>"; }).join("") + "</ul>" : "") +
+      '<p class="muted" style="margin-top:14px;font-size:12px">Data yang tampil adalah data dummy yang sudah dianonimkan.</p>';
+    $(".pbi-main").appendChild(div);
+    $(".close", div).addEventListener("click", function () { div.remove(); });
+  }
+
+  /* ---------- Master Report (read only) ---------- */
+  function renderMaster() {
+    content.innerHTML =
+      '<div class="content-header"><h1>Master Report</h1><small>Daftar report Power BI</small></div>' +
+      '<div class="callout"><h4><i class="fa fa-eye"></i> Mode lihat saja</h4><p>Akun demo memakai role <b>viewer</b>. Di aplikasi asli, admin bisa menambah, mengubah, menguji koneksi report ke Power BI, dan mengatur hak akses per role/user di halaman ini.</p></div>' +
+      '<div class="box"><div class="box-header"><h3>Report</h3><span class="sp"></span><input class="search" type="search" placeholder="Cari report..." aria-label="Cari report"> <button class="btn btn-primary" type="button" disabled title="Tidak tersedia di demo"><i class="fa fa-plus"></i> Tambah</button></div>' +
+      '<div class="box-body table-wrap"><table><thead><tr><th>#</th><th>Group Report</th><th>Dashboard Group</th><th>Judul</th><th>Jenis embed</th><th>Status</th><th></th></tr></thead><tbody id="rows"></tbody></table></div></div>';
+    var rows = $("#rows");
+    function draw(q) {
+      q = (q || "").toLowerCase();
+      var list = REPORTS.filter(function (r) { return !q || (r.group + " " + r.subgroup + " " + r.title).toLowerCase().indexOf(q) >= 0; });
+      rows.innerHTML = list.length ? list.map(function (r, i) {
+        return "<tr><td>" + (i + 1) + "</td><td>" + esc(r.group) + "</td><td>" + esc(r.subgroup) + "</td><td><b>" + esc(r.title) + "</b></td>" +
+          '<td><span class="badge ' + (isLive(r) ? "b-live" : "b-img") + '">' + (isLive(r) ? "Publish to web" : "Gambar &amp; video") + "</span></td>" +
+          '<td><span class="badge b-ok">Aktif</span></td>' +
+          '<td><a class="btn" href="#dashboard?menu=' + encodeURIComponent(r.id) + '"><i class="fa fa-external-link"></i> Buka</a></td></tr>';
+      }).join("") : '<tr><td colspan="7" class="muted">Tidak ada report yang cocok.</td></tr>';
+    }
+    $(".search", content).addEventListener("input", function () { draw(this.value); });
+    draw("");
+    document.title = "Master Report – Bytra";
+  }
+
+  /* ---------- User & Role (read only) ---------- */
+  function renderAccess() {
+    var roles = [
+      ["developer", "Semua menu, semua report, kelola permission"],
+      ["superadmin", "Kelola user, role, dan semua report"],
+      ["admin", "Kelola user di bawah levelnya dan Master Report"],
+      ["viewer", "Hanya report yang di-assign ke role/user-nya"]
+    ];
+    content.innerHTML =
+      '<div class="content-header"><h1>User &amp; Role</h1><small>Hak akses berbasis role</small></div>' +
+      '<div class="callout"><h4><i class="fa fa-shield"></i> Cara kerja di aplikasi asli</h4><p>Akses dicek di server setiap kali report meminta embed token. Role memiliki hierarki: user tidak bisa mengelola user atau role yang levelnya lebih tinggi. Di demo ini halaman hanya bisa dilihat.</p></div>' +
+      '<div class="box"><div class="box-header"><h3>Role</h3></div><div class="box-body table-wrap"><table><thead><tr><th>Role</th><th>Akses</th><th>Level</th></tr></thead><tbody>' +
+      roles.map(function (r, i) { return "<tr><td><b>" + r[0] + "</b>" + (r[0] === "viewer" ? ' <span class="badge b-live">akun demo</span>' : "") + "</td><td>" + r[1] + "</td><td>" + (roles.length - i) + "</td></tr>"; }).join("") +
+      "</tbody></table></div></div>";
+    document.title = "User & Role – Bytra";
+  }
+
+  /* ---------- Tentang ---------- */
+  function renderAbout() {
+    content.innerHTML =
+      '<div class="content-header"><h1>Tentang Bytra</h1><small>Portal Power BI</small></div>' +
+      '<div class="box"><div class="box-body">' +
+      '<p>Bytra adalah portal yang saya bangun untuk menampilkan report Power BI kepada user bisnis tanpa perlu akun Microsoft. User login dengan akun aplikasi, memilih <b>Group Report</b> → <b>Dashboard Group</b> → <b>Dashboard</b>, lalu report tampil di halaman yang sama.</p>' +
+      '<p class="muted">Halaman ini adalah <b>demo statis</b> untuk portofolio. Login hanya simulasi dan semua data adalah data dummy. Aplikasi aslinya berjalan di server.</p>' +
+      '</div></div>' +
+      '<div class="grid">' +
+        '<div class="box"><div class="box-body"><h4><i class="fa fa-code"></i> Stack</h4><p>Laravel 11, Inertia.js, Vue 3, AdminLTE 2, SQL Server / sqlite, powerbi-client.</p></div></div>' +
+        '<div class="box"><div class="box-body"><h4><i class="fa fa-key"></i> Embed "App Owns Data"</h4><p>Embed token dibuat di server lewat service principal Azure, di-cache, dan di-refresh otomatis 5 menit sebelum expired. Credential Power BI tidak pernah sampai ke browser.</p></div></div>' +
+        '<div class="box"><div class="box-body"><h4><i class="fa fa-users"></i> RBAC &amp; Row-Level Security</h4><p>Hak akses report per role atau per user, dengan effective identity untuk Row-Level Security di Power BI.</p></div></div>' +
+        '<div class="box"><div class="box-body"><h4><i class="fa fa-sliders"></i> Sinkron slicer</h4><p>Pilihan slicer dengan tabel.kolom yang sama ikut terbawa saat pindah report. Ada juga fit width/page, layar penuh, dan deep-link per report.</p></div></div>' +
+      "</div>" +
+      '<p><a class="btn btn-primary" href="../"><i class="fa fa-arrow-left"></i> Kembali ke portofolio</a></p>';
+    document.title = "Tentang – Bytra";
+  }
+
+  /* ---------- Router ---------- */
+  function route() {
+    var authed = loggedIn();
+    $("#login").hidden = authed;
+    $("#app").hidden = !authed;
+    if (!authed) { document.title = "Login – Bytra"; return; }
+    var h = location.hash.replace(/^#/, ""), page = h.split("?")[0] || "dashboard";
+    var m = /[?&]menu=([^&]+)/.exec(h), menu = m ? decodeURIComponent(m[1]) : null;
+    if (!/^(dashboard|master|access|about)$/.test(page)) {
+      // link lama portal (#<id-report>) tetap dibuka di dashboard
+      menu = byId(page) ? page : null; page = "dashboard";
+    }
+    $$(".sidebar-menu a").forEach(function (a) { if (a.dataset.page === page) a.setAttribute("aria-current", "page"); else a.removeAttribute("aria-current"); });
+    document.body.classList.remove("sidebar-open");
+    if (page === "master") renderMaster();
+    else if (page === "access") renderAccess();
+    else if (page === "about") renderAbout();
+    else renderDashboard(menu);
+    window.scrollTo(0, 0);
+  }
+  window.addEventListener("hashchange", route);
   route();
 })();
 </script>
