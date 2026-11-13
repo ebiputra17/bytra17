@@ -1,0 +1,383 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bytra – Power BI Portal</title>
+<meta name="description" content="Bytra: a Power BI analytics portal with Ebi Putra's dashboards in one place.">
+<link rel="canonical" href="https://ebiputra17.github.io/bytra17/portal/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Bytra – Power BI Portal by Ebi Putra">
+<meta property="og:description" content="Browse Power BI dashboards: logistics, automotive, telecom and personal analysis projects.">
+<meta property="og:url" content="https://ebiputra17.github.io/bytra17/portal/">
+<meta property="og:image" content="https://ebiputra17.github.io/bytra17/assets/work/kag-whs-explorer.webp">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#1e4d7c; --navy-d:#163a5e; --gold:#f2b705;
+  --bg:#F2F4F6; --surface:#fff; --ink:#0E1A2B; --muted:#52606F; --line:#D5DBE1; --teal:#0B6E78;
+  --display:"Bricolage Grotesque","Segoe UI",Arial,sans-serif;
+  --body:"IBM Plex Sans","Segoe UI",Arial,sans-serif;
+}
+*{box-sizing:border-box;margin:0}
+body{background:var(--bg);color:var(--ink);font:400 16px/1.55 var(--body);-webkit-font-smoothing:antialiased}
+a{color:inherit}
+button{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+h1,h2,h3{font-family:var(--display);line-height:1.15;letter-spacing:-.015em}
+
+/* top bar */
+.top{position:sticky;top:0;z-index:10;background:var(--navy);color:#fff;height:60px;display:flex;align-items:center;gap:12px;padding:0 16px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none}
+.brand svg{width:34px;height:34px;flex:none}
+.brand b{font:800 1.25rem var(--display);letter-spacing:-.01em}
+.brand small{display:block;font-size:.66rem;letter-spacing:.14em;color:#b9cbe0;font-weight:600;margin-top:-2px}
+.top .sp{flex:1}
+.top a.back{color:#fff;text-decoration:none;font-weight:600;font-size:.92rem;padding:7px 12px;border:1.5px solid rgba(255,255,255,.45);border-radius:6px;white-space:nowrap}
+.top a.back:hover{background:#fff;color:var(--navy)}
+.menu{display:none;background:none;border:1.5px solid rgba(255,255,255,.45);border-radius:6px;padding:6px 10px;cursor:pointer;color:#fff}
+
+/* layout */
+.app{display:grid;grid-template-columns:270px 1fr;min-height:calc(100vh - 60px)}
+aside{background:var(--surface);border-right:1px solid var(--line);padding:18px 14px;position:sticky;top:60px;height:calc(100vh - 60px);overflow:auto}
+.search{width:100%;padding:9px 12px;border:1px solid var(--line);border-radius:6px;font:inherit;background:var(--bg)}
+.search:focus{outline:2px solid var(--navy);outline-offset:0;background:#fff}
+.group{margin-top:18px}
+.group h4{font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:600;margin:0 8px 6px}
+.nav-item{display:flex;align-items:center;gap:8px;width:100%;text-align:left;background:none;border:0;border-radius:6px;padding:8px 10px;cursor:pointer;font-size:.93rem;text-decoration:none}
+.nav-item:hover{background:var(--bg)}
+.nav-item[aria-current="page"]{background:var(--navy);color:#fff}
+.nav-item .dot{width:7px;height:7px;border-radius:50%;background:var(--line);flex:none}
+.nav-item .dot.live{background:var(--gold)}
+.nav-item[aria-current="page"] .dot{background:var(--gold)}
+.empty-list{color:var(--muted);font-size:.9rem;padding:12px 8px}
+main{padding:28px clamp(16px,3vw,40px) 56px;min-width:0}
+
+/* home */
+.intro{background:var(--navy);color:#fff;border-radius:10px;padding:28px clamp(20px,3vw,36px);position:relative;overflow:hidden}
+.intro::after{content:"";position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.06) 1px,transparent 1px);background-size:28px 28px;pointer-events:none}
+.intro h1{font-size:clamp(1.7rem,3.6vw,2.4rem);font-weight:800;max-width:22ch;position:relative}
+.intro p{color:#cfdbe8;max-width:62ch;margin-top:10px;position:relative}
+.stats{display:flex;gap:28px;flex-wrap:wrap;margin-top:20px;position:relative}
+.stats strong{display:block;font:800 1.6rem var(--display);color:var(--gold)}
+.stats span{font-size:.85rem;color:#cfdbe8}
+.bar{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin:32px 0 16px;flex-wrap:wrap}
+.bar h2{font-size:1.4rem;font-weight:800}
+.bar span{color:var(--muted);font-size:.92rem}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:20px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:8px;overflow:hidden;display:flex;flex-direction:column;text-decoration:none;transition:border-color .15s,transform .15s}
+.card:hover{border-color:var(--navy);transform:translateY(-2px)}
+.card img{width:100%;aspect-ratio:16/9;object-fit:cover;object-position:top;border-bottom:1px solid var(--line);background:var(--bg)}
+.card div{padding:14px 16px 18px;display:flex;flex-direction:column;gap:4px}
+.card h3{font-size:1.08rem;font-weight:800}
+.card p{color:var(--muted);font-size:.9rem}
+.chip{display:inline-flex;align-items:center;gap:6px;font-size:.75rem;font-weight:600;color:var(--teal);letter-spacing:.02em}
+.chip.live::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--gold)}
+
+/* report view */
+.crumb{font-size:.88rem;color:var(--muted);margin-bottom:10px}
+.crumb a{color:var(--navy);font-weight:600;text-decoration:none}
+.crumb a:hover{text-decoration:underline}
+.head{display:flex;justify-content:space-between;gap:16px;align-items:flex-start;flex-wrap:wrap}
+.head h1{font-size:clamp(1.6rem,3.2vw,2.2rem);font-weight:800}
+.head p{color:var(--muted);max-width:70ch;margin-top:6px}
+.badge{font-size:.78rem;font-weight:600;padding:5px 10px;border-radius:99px;background:#e6edf5;color:var(--navy);white-space:nowrap}
+.badge.live{background:#fff4d1;color:#7a5b00}
+.viewer{margin-top:20px;background:var(--surface);border:1.5px solid var(--ink);border-radius:8px;overflow:hidden}
+.viewer .stage{aspect-ratio:16/9;background:#0b1624;display:block;width:100%}
+.viewer iframe{border:0;width:100%;height:100%;display:block}
+.viewer video{width:100%;height:100%;display:block;background:#000}
+.viewer .shot{padding:0;border:0;width:100%;height:100%;cursor:zoom-in;background:var(--surface)}
+.viewer .shot img{width:100%;height:100%;object-fit:contain;display:block}
+.strip{display:flex;gap:8px;padding:10px;border-top:1px solid var(--line);overflow-x:auto;background:var(--bg)}
+.strip button{flex:none;padding:0;border:2px solid transparent;border-radius:6px;background:var(--surface);cursor:pointer;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.strip button[aria-pressed="true"]{border-color:var(--navy)}
+.strip img{display:block;height:58px;width:auto;max-width:130px;object-fit:cover}
+.strip .play{height:58px;width:96px;font-size:.78rem;font-weight:600;color:#fff;background:var(--navy)}
+.meta{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin-top:20px}
+.meta div{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:14px 16px}
+.meta dt{font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.meta dd{margin:4px 0 0}
+.points{margin-top:20px;background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:16px 20px}
+.points h3{font-size:1rem;font-weight:800;margin-bottom:6px}
+.points ul{padding-left:18px;color:var(--muted)}
+.points li+li{margin-top:4px}
+.pager{display:flex;justify-content:space-between;gap:12px;margin-top:28px;flex-wrap:wrap}
+.pager a{font-weight:600;text-decoration:none;color:var(--navy);padding:9px 14px;border:1.5px solid var(--navy);border-radius:6px}
+.pager a:hover{background:var(--navy);color:#fff}
+.note{margin-top:32px;font-size:.85rem;color:var(--muted)}
+
+dialog{border:0;background:transparent;padding:0;max-width:none;max-height:none}
+dialog::backdrop{background:rgba(14,26,43,.88)}
+dialog img{display:block;max-width:94vw;max-height:92vh;border-radius:6px;background:#fff;cursor:zoom-out}
+
+@media(max-width:860px){
+  .menu{display:inline-block}
+  .app{grid-template-columns:1fr}
+  aside{position:fixed;top:60px;left:0;bottom:0;width:min(300px,86vw);height:auto;z-index:9;transform:translateX(-100%);transition:transform .2s;box-shadow:0 10px 30px rgba(0,0,0,.2)}
+  body.open aside{transform:none}
+  .top a.back span{display:none}
+}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <button class="menu" type="button" aria-controls="sidebar" aria-expanded="false" aria-label="Show report list">☰</button>
+  <a class="brand" href="#">
+    <svg viewBox="0 0 48 48" aria-hidden="true"><rect width="48" height="48" rx="11" fill="#fff" fill-opacity=".12"/><g fill="#fff"><rect x="9" y="26" width="7" height="13" rx="2"/><rect x="20.5" y="18" width="7" height="21" rx="2"/><rect x="32" y="12" width="7" height="27" rx="2"/></g><circle cx="35.5" cy="7" r="3" fill="#f2b705"/></svg>
+    <span><b>Bytra</b><small>POWER BI ANALYTICS</small></span>
+  </a>
+  <div class="sp"></div>
+  <a class="back" href="../">← <span>Back to </span>portfolio</a>
+</header>
+
+<div class="app">
+  <aside id="sidebar" aria-label="Reports">
+    <input class="search" type="search" placeholder="Search reports…" aria-label="Search reports">
+    <div id="nav"></div>
+  </aside>
+  <main id="main" tabindex="-1"></main>
+</div>
+
+<dialog id="lb"><img alt=""></dialog>
+
+<script>
+/*
+  Report list. To add a report: copy one object and fill it in.
+  - embedUrl: the "Publish to web" link from Power BI (File > Embed report > Publish to web).
+    If it is filled in, the live interactive report is shown. If it is empty, screenshots/video are shown.
+    Only publish reports that use dummy or public data: Publish to web makes the report public.
+  - video / images: paths relative to this page.
+*/
+var REPORTS = [
+  {
+    id: "warehouse-3d",
+    title: "Warehouse Utilization 3D Explorer",
+    category: "Logistics",
+    summary: "An interactive 3D view of warehouse capacity: pick a warehouse, see location status and utilization, then drill into box-level detail.",
+    points: ["3D rack and bin map coloured by utilization", "Drill-through from warehouse to location to box", "Used daily by warehouse supervisors"],
+    sources: "Online spreadsheets, SQL Server, SAP, text files, GP",
+    etl: "SSIS, M Query, Python, Dataflow, Microsoft Fabric",
+    visual: "Power BI, embedded in a web portal",
+    embedUrl: "",
+    video: "../assets/work/kag-whs.mp4",
+    images: ["../assets/work/kag-whs-explorer.webp", "../assets/work/kag-whs-detail.webp"]
+  },
+  {
+    id: "kpi-scorecard",
+    title: "KPI Balanced Scorecard",
+    category: "Logistics",
+    summary: "Monthly KPI achievement per warehouse for Operations and Administration, with written summaries that explain each indicator.",
+    points: ["Scorecard per warehouse and department", "Narrative pages that explain every KPI", "Monthly trend versus target"],
+    sources: "Online spreadsheets, SQL Server, SAP, text files, GP",
+    etl: "SSIS, M Query, Python, Dataflow, Microsoft Fabric",
+    visual: "Power BI, embedded in a web portal",
+    embedUrl: "",
+    video: "",
+    images: ["../assets/work/kag-kpi-home.webp", "../assets/work/kag-kpi-summary.webp", "../assets/work/kag-kpi-narrative-1.webp", "../assets/work/kag-kpi-narrative-2.webp"]
+  },
+  {
+    id: "wip-dashboard",
+    title: "Work in Progress (WIP) Dashboard",
+    category: "Automotive",
+    summary: "Tracks work in progress by status, potential revenue, aging and claim status, with summary and detail pages, a mobile layout and hourly refresh.",
+    points: ["Aging buckets and claim status", "Potential revenue per branch", "Separate mobile layout, hourly refresh"],
+    sources: "Online spreadsheets, SQL Server, SAP",
+    etl: "SSIS, M Query, Python",
+    visual: "Power BI, embedded in a web page",
+    embedUrl: "",
+    video: "../assets/work/astra-wip.mp4",
+    images: ["../assets/work/astra-wip-summary.webp", "../assets/work/astra-wip-detail.webp", "../assets/work/astra-wip-mobile-summary.webp", "../assets/work/astra-wip-mobile-detail.webp"]
+  },
+  {
+    id: "incentive-performance",
+    title: "Incentive Performance Dashboard",
+    category: "Automotive",
+    summary: "Measures performance for mechanics and foremen: total incentive, revenue, lead time and per-person reports, with a mobile layout.",
+    points: ["Incentive and revenue per mechanic", "Lead time analysis", "Per-person report pages"],
+    sources: "Online spreadsheets, SQL Server, SAP",
+    etl: "SSIS, M Query, Python",
+    visual: "Power BI, embedded in a web page",
+    embedUrl: "",
+    video: "../assets/work/astra-incentive.mp4",
+    images: ["../assets/work/astra-incentive-main.webp", "../assets/work/astra-incentive-detail.webp", "../assets/work/astra-incentive-mobile.webp"]
+  },
+  {
+    id: "network-operations",
+    title: "Network Operations Dashboards",
+    category: "Telecom",
+    summary: "Construction progress, trouble tickets with MTTR by city and region, and progress per area, built for business teams.",
+    points: ["Construction progress tracking", "Trouble tickets and MTTR by city and region", "Progress detail per area"],
+    sources: "Online spreadsheets, SQL Server",
+    etl: "SSIS, M Query",
+    visual: "Power BI, embedded in a web page",
+    embedUrl: "",
+    video: "../assets/work/ln-dashboards.mp4",
+    images: ["../assets/work/ln-construction.webp", "../assets/work/ln-trouble-ticket.webp", "../assets/work/ln-detail-area.webp"]
+  },
+  {
+    id: "bike-sales",
+    title: "Bike Sales Analysis",
+    category: "Personal projects",
+    summary: "Sales performance dashboard built to find what drives revenue.",
+    points: ["Revenue by product, region and customer segment"],
+    sources: "Public dataset",
+    etl: "Power Query",
+    visual: "Power BI",
+    embedUrl: "",
+    video: "",
+    images: ["../assets/images/bike.png"]
+  },
+  {
+    id: "covid-19",
+    title: "COVID-19 Cases",
+    category: "Personal projects",
+    summary: "Case trends explored and visualized in an interactive report.",
+    points: ["Case trends over time and by region"],
+    sources: "Public dataset",
+    etl: "Power Query",
+    visual: "Power BI",
+    embedUrl: "",
+    video: "",
+    images: ["../assets/images/covid.png"]
+  }
+];
+
+(function () {
+  var main = document.getElementById('main'),
+      nav = document.getElementById('nav'),
+      search = document.querySelector('.search'),
+      menu = document.querySelector('.menu'),
+      lb = document.getElementById('lb'), lbImg = lb.querySelector('img');
+
+  function esc(s) { return String(s).replace(/[&<>"']/g, function (c) { return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
+  function thumb(r) { return r.images[0] || ''; }
+  function isLive(r) { return /^https:\/\/app\.powerbi\.com\//.test(r.embedUrl || ''); }
+  function categories(list) {
+    var out = [];
+    list.forEach(function (r) { if (out.indexOf(r.category) < 0) out.push(r.category); });
+    return out;
+  }
+
+  function renderNav(current) {
+    var q = search.value.trim().toLowerCase();
+    var list = REPORTS.filter(function (r) {
+      return !q || (r.title + ' ' + r.category + ' ' + r.summary).toLowerCase().indexOf(q) >= 0;
+    });
+    var html = '<div class="group"><a class="nav-item" href="#"' + (current ? '' : ' aria-current="page"') + '>All reports</a></div>';
+    categories(list).forEach(function (c) {
+      html += '<div class="group"><h4>' + esc(c) + '</h4>';
+      list.filter(function (r) { return r.category === c; }).forEach(function (r) {
+        html += '<a class="nav-item" href="#' + esc(r.id) + '"' + (current === r.id ? ' aria-current="page"' : '') + '>' +
+                '<span class="dot' + (isLive(r) ? ' live' : '') + '"></span>' + esc(r.title) + '</a>';
+      });
+      html += '</div>';
+    });
+    if (!list.length) html += '<p class="empty-list">No reports match “' + esc(search.value) + '”.</p>';
+    nav.innerHTML = html;
+  }
+
+  function renderHome() {
+    var live = REPORTS.filter(isLive).length;
+    var html =
+      '<section class="intro">' +
+        '<h1>Power BI dashboards, in one portal.</h1>' +
+        '<p>Bytra is the analytics portal I built to publish Power BI reports from a single place. This public edition shows my dashboards with anonymized dummy data. Pick a report to open it.</p>' +
+        '<div class="stats">' +
+          '<div><strong>' + REPORTS.length + '</strong><span>reports</span></div>' +
+          '<div><strong>' + categories(REPORTS).length + '</strong><span>industries &amp; topics</span></div>' +
+          (live ? '<div><strong>' + live + '</strong><span>live interactive</span></div>' : '') +
+        '</div>' +
+      '</section>' +
+      '<div class="bar"><h2>All reports</h2>' + (live ? '<span>Yellow dot = live interactive report</span>' : '') + '</div>' +
+      '<div class="cards">' +
+      REPORTS.map(function (r) {
+        return '<a class="card" href="#' + esc(r.id) + '">' +
+          '<img src="' + esc(thumb(r)) + '" alt="" loading="lazy">' +
+          '<div><span class="chip' + (isLive(r) ? ' live' : '') + '">' + esc(r.category) + '</span>' +
+          '<h3>' + esc(r.title) + '</h3><p>' + esc(r.summary) + '</p></div></a>';
+      }).join('') +
+      '</div>' +
+      '<p class="note">Screenshots and recordings use anonymized dummy data. Built by Ebi Putra.</p>';
+    main.innerHTML = html;
+    document.title = 'Bytra – Power BI Portal';
+  }
+
+  function stageFor(r, item) {
+    if (item.type === 'embed') return '<iframe title="' + esc(r.title) + '" src="' + esc(r.embedUrl) + '" allowfullscreen loading="lazy"></iframe>';
+    if (item.type === 'video') return '<video controls playsinline preload="metadata" poster="' + esc(thumb(r)) + '"><source src="' + esc(r.video) + '" type="video/mp4"></video>';
+    return '<button type="button" class="shot" data-full="' + esc(item.src) + '" aria-label="Enlarge screenshot"><img src="' + esc(item.src) + '" alt="' + esc(r.title) + ' screenshot"></button>';
+  }
+
+  function renderReport(r) {
+    var items = [];
+    if (isLive(r)) items.push({ type: 'embed' });
+    if (r.video) items.push({ type: 'video' });
+    r.images.forEach(function (src) { items.push({ type: 'image', src: src }); });
+
+    var idx = REPORTS.indexOf(r),
+        prev = REPORTS[(idx - 1 + REPORTS.length) % REPORTS.length],
+        next = REPORTS[(idx + 1) % REPORTS.length];
+
+    var strip = items.length > 1 ? '<div class="strip">' + items.map(function (it, i) {
+      var inner = it.type === 'image' ? '<img src="' + esc(it.src) + '" alt="" loading="lazy">'
+                : '<span class="play">' + (it.type === 'embed' ? 'Live report' : '▶ Recording') + '</span>';
+      return '<button type="button" data-i="' + i + '" aria-pressed="' + (i === 0) + '" aria-label="Show item ' + (i + 1) + '">' + inner + '</button>';
+    }).join('') + '</div>' : '';
+
+    main.innerHTML =
+      '<p class="crumb"><a href="#">All reports</a> / ' + esc(r.category) + '</p>' +
+      '<div class="head"><div><h1>' + esc(r.title) + '</h1><p>' + esc(r.summary) + '</p></div>' +
+      '<span class="badge' + (isLive(r) ? ' live' : '') + '">' + (isLive(r) ? 'Live interactive' : 'Screenshots & recording') + '</span></div>' +
+      '<div class="viewer"><div class="stage">' + stageFor(r, items[0]) + '</div>' + strip + '</div>' +
+      '<dl class="meta"><div><dt>Sources</dt><dd>' + esc(r.sources) + '</dd></div>' +
+      '<div><dt>ETL</dt><dd>' + esc(r.etl) + '</dd></div>' +
+      '<div><dt>Visual</dt><dd>' + esc(r.visual) + '</dd></div></dl>' +
+      (r.points && r.points.length ? '<div class="points"><h3>Highlights</h3><ul>' + r.points.map(function (p) { return '<li>' + esc(p) + '</li>'; }).join('') + '</ul></div>' : '') +
+      '<nav class="pager" aria-label="More reports"><a href="#' + esc(prev.id) + '">← ' + esc(prev.title) + '</a><a href="#' + esc(next.id) + '">' + esc(next.title) + ' →</a></nav>' +
+      '<p class="note">Data shown is anonymized dummy data.</p>';
+
+    var stage = main.querySelector('.stage');
+    main.querySelectorAll('.strip button').forEach(function (b) {
+      b.addEventListener('click', function () {
+        stage.innerHTML = stageFor(r, items[+b.dataset.i]);
+        main.querySelectorAll('.strip button').forEach(function (x) { x.setAttribute('aria-pressed', x === b); });
+      });
+    });
+    document.title = r.title + ' – Bytra';
+  }
+
+  function route() {
+    var id = decodeURIComponent(location.hash.slice(1));
+    var r = REPORTS.filter(function (x) { return x.id === id; })[0];
+    renderNav(r ? r.id : '');
+    if (r) renderReport(r); else renderHome();
+    document.body.classList.remove('open');
+    menu.setAttribute('aria-expanded', 'false');
+    window.scrollTo(0, 0);
+  }
+
+  search.addEventListener('input', function () {
+    var id = decodeURIComponent(location.hash.slice(1));
+    renderNav(REPORTS.some(function (x) { return x.id === id; }) ? id : '');
+  });
+  menu.addEventListener('click', function () {
+    var open = document.body.classList.toggle('open');
+    menu.setAttribute('aria-expanded', String(open));
+  });
+  document.addEventListener('click', function (e) {
+    var b = e.target.closest('[data-full]');
+    if (b) { lbImg.src = b.dataset.full; lbImg.alt = b.getAttribute('aria-label') || ''; lb.showModal(); return; }
+    if (e.target === lb || e.target === lbImg) lb.close();
+  });
+  window.addEventListener('hashchange', route);
+  route();
+})();
+</script>
+</body>
+</html>

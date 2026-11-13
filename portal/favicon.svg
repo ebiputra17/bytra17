@@ -1,0 +1,10 @@
+<svg width="48" height="48" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+  <title>Bytra</title>
+  <rect width="48" height="48" rx="11" fill="#1e4d7c"/>
+  <g fill="#ffffff">
+    <rect x="9" y="26" width="7" height="13" rx="2"/>
+    <rect x="20.5" y="18" width="7" height="21" rx="2"/>
+    <rect x="32" y="12" width="7" height="27" rx="2"/>
+  </g>
+  <circle cx="35.5" cy="7" r="3" fill="#f2b705"/>
+</svg>

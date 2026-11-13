@@ -40,6 +40,16 @@ nav b{font:800 1.15rem var(--display)}
 nav ul{list-style:none;display:flex;gap:20px;padding:0;font-size:.95rem;flex-wrap:wrap}
 nav a{text-decoration:none;color:var(--muted)}
 nav a:hover{color:var(--ink)}
+nav a.portal-link{color:var(--teal);font-weight:600}
+
+/* portal banner */
+.portal{display:grid;grid-template-columns:auto 1fr auto;gap:20px 28px;align-items:center;background:#1e4d7c;color:#fff;border-radius:10px;padding:26px 28px;margin-top:24px}
+.portal svg{width:56px;height:56px}
+.portal h3{font-size:1.35rem;font-weight:800}
+.portal p{color:#cfdbe8;font-size:.98rem;max-width:60ch;margin-top:4px}
+.portal .btn{border-color:#fff;background:#fff;color:#1e4d7c;white-space:nowrap}
+.portal .btn:hover{background:#f2b705;border-color:#f2b705;color:#0E1A2B}
+@media(max-width:700px){.portal{grid-template-columns:1fr}}
 
 /* hero */
 .hero{padding:72px 0 64px;border:0}
@@ -156,6 +166,7 @@ footer{padding:28px 0;border-top:1px solid var(--line);color:var(--muted);font-s
       <li><a href="#about">About</a></li>
       <li><a href="#experience">Experience</a></li>
       <li><a href="#projects">Projects</a></li>
+      <li><a href="portal/" class="portal-link">Power BI Portal</a></li>
       <li><a href="#skills">Skills</a></li>
       <li><a href="#education">Education</a></li>
       <li><a href="#contact">Contact</a></li>
@@ -169,6 +180,7 @@ footer{padding:28px 0;border-top:1px solid var(--line);color:var(--muted);font-s
     <p class="lead">I’m Ebi Putra, a Data Analyst and Data Engineer. I build the ETL pipelines and Power BI dashboards that turn scattered ERP, API and database data into reports teams actually use.</p>
     <div class="btns">
       <a class="btn primary" href="assets/CV-Ebi-Putra.pdf" download>Download CV</a>
+      <a class="btn" href="portal/">Open Power BI Portal</a>
       <a class="btn" href="#projects">See my work</a>
     </div>
 
@@ -284,6 +296,12 @@ footer{padding:28px 0;border-top:1px solid var(--line);color:var(--muted);font-s
   <div class="wrap">
     <h2>Projects</h2>
     <p class="note">Power BI work from my last three roles. Screenshots and recordings use anonymized dummy data. Click a thumbnail to enlarge, or press play on the recording.</p>
+
+    <a class="portal" href="portal/" style="text-decoration:none;margin:-8px 0 48px">
+      <svg viewBox="0 0 48 48" aria-hidden="true"><rect width="48" height="48" rx="11" fill="#fff" fill-opacity=".12"/><g fill="#fff"><rect x="9" y="26" width="7" height="13" rx="2"/><rect x="20.5" y="18" width="7" height="21" rx="2"/><rect x="32" y="12" width="7" height="27" rx="2"/></g><circle cx="35.5" cy="7" r="3" fill="#f2b705"/></svg>
+      <div><h3>Bytra Power BI Portal</h3><p>Browse all my dashboards in one portal, the same way business users open their reports.</p></div>
+      <span class="btn">Open portal →</span>
+    </a>
 
     <article class="case">
       <div class="case-info">
